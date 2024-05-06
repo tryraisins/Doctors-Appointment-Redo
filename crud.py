@@ -62,7 +62,7 @@ class CRUDService:
     
     def create_appointment(self, patient_id: int, appointment_date: datetime, doctor_type: str):
 
-        if appointment_date.date() < datetime.today():
+        if appointment_date < datetime.now():
             raise HTTPException(status_code=400, detail="You cannot set appointments for past dates")
 
         available_doctors = [doctor for doctor_id, doctor in doctors_data.items() if doctor.is_available and doctor.specialization == doctor_type]

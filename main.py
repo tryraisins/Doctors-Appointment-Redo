@@ -77,7 +77,7 @@ def create_appointment(patient_id: int, appointment_date: datetime, doctor_type:
 
 @app.put("/appointments/{appointment_id}/complete")
 def complete_appointment(appointment_id: int):
-    crud_service.update_patient(appointment_id)
+    crud_service.complete_appointment(appointment_id)
     return {"message": "Appointment marked as Completed"}
 
 
