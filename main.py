@@ -9,9 +9,7 @@ app = FastAPI()
 @app.post("/patients", response_model=Patients)
 def create_patient(patient: Patients):
     patient_saved = crud_service.create_patient(patient)
-    print(type(patient_saved))
     return {"message": "Patient Data created successfully!", "data": patient_saved}
-    # return {"message": "Patient Data created successfully!", "data": patient_saved}
 
 
 
