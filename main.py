@@ -6,14 +6,14 @@ from schemas import Patients, Doctors, Appointment
 app = FastAPI()
 
 
-@app.post("/patients", response_model=Patients)
+@app.post("/patients/")
 def create_patient(patient: Patients):
     patient_saved = crud_service.create_patient(patient)
     return {"message": "Patient Data created successfully!", "data": patient_saved}
 
 
 
-@app.get("/patients", response_model=list[Patients])
+@app.get("/patients/", response_model=list[Patients])
 def get_all_patients(skip: int = 0, limit: int = 10):
     patients = crud_service.get_all_patients(skip, limit)
     return patients
@@ -24,46 +24,46 @@ def get_patient(patient_id: int):
     return patient
 
 
-@app.put("/patients/{patient_id}", response_model=Patients)
+@app.put("/patients/{patient_id}")
 def update_patient(patient_id: int, patient: Patients):
     patient = crud_service.update_patient(patient_id, patient)
     return {"message": "Patient Data updated successfully", "data": patient}
 
 
-@app.delete("/patients/{patient_id}", response_model=Patients)
+@app.delete("/patients/{patient_id}")
 def delete_patient(patient_id: int):
     crud_service.delete_patient(patient_id)
     return {"message": "Patient Data deleted successfully"}
 
-@app.post("/doctors", response_model=Doctors)
+@app.post("/doctors/")
 def create_doctor(doctor: Doctors):
     doctor = crud_service.create_doctor(doctor)
     return {"message": "Doctor Data created successfully!", "data": doctor}
 
 
 
-@app.get("/doctors", response_model=list[Doctors])
+@app.get("/doctors/", response_model=list[Doctors])
 def get_all_doctors(skip: int = 0, limit: int = 10):
     doctors = crud_service.get_all_doctors(skip, limit)
     return doctors
 
-@app.get("/doctors/{doctor_id}", response_model=Doctors)
+@app.get("/doctors/{doctor_id}")
 def get_doctor(doctor_id: int):
     doctor = crud_service.get_doctor(doctor_id)
     return doctor
 
-@app.put("/doctors/{doctor_id}", response_model=Doctors)
+@app.put("/doctors/{doctor_id}")
 def update_doctor(doctor_id: int, doctor: Doctors):
     doctor = crud_service.update_doctor(doctor_id, doctor)
     return {"message": "Doctor Data updated successfully", "data": doctor}
 
 
-@app.delete("/doctors/{doctor_id}", response_model=Doctors)
+@app.delete("/doctors/{doctor_id}")
 def delete_doctor(doctor_id: int):
       crud_service.delete_doctor(doctor_id)
       return {"message": "Doctor Data deleted successfully"}
 
-@app.post("/appointments", response_model=Appointment)
+@app.post("/appointments/")
 def create_appointment(patient_id: int, appointment_date: datetime, doctor_type: str):
     appointment = crud_service.create_appointment( patient_id, appointment_date, doctor_type)
     return {"message": "Appointment created successfully!", "data": appointment}
