@@ -1,16 +1,14 @@
 from fastapi import HTTPException
 from datetime import datetime
-# from typing import List, Dict
 from schemas import Patients, Doctors, Appointment
 from database import patients_data, doctors_data, appointment_data
 
 
 class CRUDService:
-    def create_patient(self, patient: Patients) -> Patients:
+    def create_patient(self, patient: Patients):
         if patient.id in patients_data:
             raise HTTPException(status_code=400, detail=f"Patient with id, {patient.id}, already exists")
         patients_data[patient.id] = patient
-
         return patient
     
     def get_all_patients(self, skip: int = 0, limit: int = 10):
