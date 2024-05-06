@@ -22,10 +22,11 @@ class CRUDService:
 
         raise HTTPException(status_code=404, detail={"message": f"No Patients Data found for id, {patient_id}"})
     
-    def update_patient(self, patient_id: int, patient: Patients):
+    def update_patient(self, patient: Patients):
+        patient_id = patient.id
         if patient_id not in patients_data:
             raise HTTPException(status_code=404, detail=f"No Patients Data found for id, {patient_id}")
-        patients_data[patient.id] = patient
+        patients_data[patient_id] = patient
         return patient
 
     def delete_patient(self, patient_id: int):

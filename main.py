@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from datetime import datetime
 from crud import crud_service
 from schemas import Patients, Doctors, Appointment
@@ -26,8 +26,11 @@ def get_patient(patient_id: int):
 
 @app.put("/patients/{patient_id}")
 def update_patient(patient_id: int, patient: Patients):
-    patient = crud_service.update_patient(patient_id, patient)
-    return {"message": "Patient Data updated successfully", "data": patient}
+    if patient_id != patient.id:
+        raise HTTPException(status_code=400, detail="Patient ID in link does not match ID in the data")
+    
+    patient_updated = crud_service.update_patient(patient)
+    return {"message": "Patient Data updated successfully", "data": patient_updated}
 
 
 @app.delete("/patients/{patient_id}")
@@ -54,6 +57,8 @@ def get_doctor(doctor_id: int):
 
 @app.put("/doctors/{doctor_id}")
 def update_doctor(doctor_id: int, doctor: Doctors):
+    if doctor_id != doctor.id:
+        raise HTTPException(status_code=400, detail="Doctor ID in link does not match ID in the data")
     doctor = crud_service.update_doctor(doctor_id, doctor)
     return {"message": "Doctor Data updated successfully", "data": doctor}
 
@@ -74,6 +79,8 @@ def create_appointment(patient_id: int, appointment_date: datetime, doctor_type:
 def complete_appointment(appointment_id: int):
     crud_service.update_patient(appointment_id)
     return {"message": "Appointment marked as Completed"}
+
+
 
 @app.delete("/appointments/{appointment_id}")
 def cancel_appointment(appointment_id: int):
