@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from datetime import datetime
 from crud import crud_service
-from schemas import Patients, Doctors, Appointment
+from schemas import Patients, Doctors
 
 app = FastAPI()
 
